@@ -18,43 +18,47 @@
     }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 2rem 1rem; max-width: 720px; margin: 0 auto; }
-  h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
-  .subtitle { font-size: 14px; color: var(--text2); margin-bottom: 2rem; }
-  .section { margin-bottom: 1.5rem; }
-  .section-label { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
-  .input-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-  .input-row label { font-size: 14px; color: var(--text2); min-width: 140px; }
-  .input-row input[type="number"] { width: 100px; padding: 6px 10px; font-size: 14px; text-align: right; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); color: var(--text); outline: none; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; padding: 1.5rem 2rem; max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 600; margin-bottom: 2px; }
+  .subtitle { font-size: 13px; color: var(--text2); margin-bottom: 1rem; }
+  .page-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+  .col-left, .col-right { min-width: 0; }
+  .section { margin-bottom: 1rem; }
+  .section-label { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; }
+  .input-row { display: flex; align-items: center; gap: 8px; }
+  .input-row label { font-size: 13px; color: var(--text2); min-width: 120px; }
+  .input-row input[type="number"] { width: 80px; padding: 4px 8px; font-size: 13px; text-align: right; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); color: var(--text); outline: none; }
   .input-row input:focus { border-color: var(--accent); }
-  .unit { font-size: 13px; color: var(--text3); min-width: 30px; }
-  .slider-row { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-  .slider-row label { font-size: 14px; color: var(--text2); min-width: 140px; }
+  .unit { font-size: 12px; color: var(--text3); }
+  .slider-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .slider-row label { font-size: 13px; color: var(--text2); min-width: 120px; }
   .slider-row input[type="range"] { flex: 1; }
-  .slider-val { font-size: 14px; font-weight: 600; min-width: 80px; text-align: right; }
-  .slider-bounds { display: flex; justify-content: space-between; font-size: 12px; color: var(--text3); margin-bottom: 12px; padding-left: 152px; }
-  .auto-note { font-size: 13px; color: var(--accent); margin-bottom: 8px; }
-  .bed-warning { font-size: 13px; color: var(--warn); margin-bottom: 8px; display: none; }
-  .result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
-  .metric { background: var(--bg2); border-radius: var(--radius); padding: 1rem; }
-  .metric .label { font-size: 12px; color: var(--text2); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .metric .value { font-size: 20px; font-weight: 600; }
-  .metric .sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
-  .grid-preview { display: flex; justify-content: center; margin: 1rem 0 1.5rem; }
+  .slider-val { font-size: 13px; font-weight: 600; min-width: 60px; text-align: right; }
+  .slider-bounds { display: flex; justify-content: space-between; font-size: 11px; color: var(--text3); margin-bottom: 6px; padding-left: 128px; }
+  .auto-note { font-size: 12px; color: var(--accent); margin-bottom: 4px; }
+  .bed-warning { font-size: 12px; color: var(--warn); margin-bottom: 4px; display: none; }
+  .result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-bottom: 1rem; }
+  .metric { background: var(--bg2); border-radius: var(--radius); padding: 8px 10px; }
+  .metric .label { font-size: 11px; color: var(--text2); margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .metric .value { font-size: 16px; font-weight: 600; }
+  .metric .sub { font-size: 11px; color: var(--text3); margin-top: 1px; }
+  .grid-preview { display: flex; justify-content: center; margin: 0 0 1rem; }
   canvas { border-radius: var(--radius); }
-  table { width: 100%; font-size: 14px; border-collapse: collapse; margin-bottom: 1.5rem; }
-  th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); }
-  th { font-weight: 600; font-size: 12px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
+  table { width: 100%; font-size: 13px; border-collapse: collapse; margin-bottom: 1rem; }
+  th, td { padding: 5px 8px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { font-weight: 600; font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
   td:not(:first-child), th:not(:first-child) { text-align: right; }
   .totals-row { font-weight: 600; border-top: 2px solid var(--border); }
   .sub-row { font-weight: 600; background: var(--bg2); }
-  button { padding: 8px 20px; font-size: 14px; cursor: pointer; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); color: var(--text); transition: all 0.15s; }
+  button { padding: 6px 14px; font-size: 13px; cursor: pointer; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); color: var(--text); transition: all 0.15s; }
   button:hover { background: var(--bg2); border-color: var(--accent); }
   button:active { transform: scale(0.98); }
   .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
-  .info-box { background: var(--accent-bg); border-radius: var(--radius); padding: 1rem 1.25rem; font-size: 13px; color: var(--text2); margin-bottom: 1.5rem; line-height: 1.7; }
+  .info-box { background: var(--accent-bg); border-radius: var(--radius); padding: 8px 12px; font-size: 12px; color: var(--text2); margin-bottom: 1rem; line-height: 1.6; }
   .info-box strong { color: var(--text); }
-  @media (max-width: 500px) { .input-row label, .slider-row label { min-width: 100px; } .result-grid { grid-template-columns: 1fr; } .slider-bounds { padding-left: 112px; } }
+  @media (max-width: 800px) { .page-layout { grid-template-columns: 1fr; } .input-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 500px) { .input-row label, .slider-row label { min-width: 100px; } .result-grid { grid-template-columns: 1fr; } .slider-bounds { padding-left: 108px; } }
 </style>
 </head>
 <body>
@@ -66,71 +70,79 @@
   <strong>How it works:</strong> Enter your window pane dimensions and printer bed size. Use the slider to adjust pane size between the largest possible (fewest bars) and smaller panes (more bars). The calculator ensures all pieces fit your print bed and shows verified dimension totals.
 </div>
 
-<div class="section">
-  <div class="section-label">Window pane and printer</div>
-  <div class="input-row">
-    <label for="paneW">Pane width</label>
-    <input type="number" id="paneW" value="530" min="50" max="5000">
-    <span class="unit">mm</span>
-  </div>
-  <div class="input-row">
-    <label for="paneH">Pane height</label>
-    <input type="number" id="paneH" value="1590" min="50" max="5000">
-    <span class="unit">mm</span>
-  </div>
-  <div class="input-row">
-    <label for="barW">Bar / intersection width</label>
-    <input type="number" id="barW" value="20" min="5" max="50">
-    <span class="unit">mm</span>
-  </div>
-  <div class="input-row">
-    <label for="maxBed">Max print bed length</label>
-    <input type="number" id="maxBed" value="250" min="50" max="1000" step="10">
-    <span class="unit">mm</span>
-  </div>
-</div>
+<div class="page-layout">
+  <div class="col-left">
+    <div class="section">
+      <div class="section-label">Window pane and printer</div>
+      <div class="input-grid">
+        <div class="input-row">
+          <label for="paneW">Pane width</label>
+          <input type="number" id="paneW" value="530" min="50" max="5000">
+          <span class="unit">mm</span>
+        </div>
+        <div class="input-row">
+          <label for="paneH">Pane height</label>
+          <input type="number" id="paneH" value="1590" min="50" max="5000">
+          <span class="unit">mm</span>
+        </div>
+        <div class="input-row">
+          <label for="barW">Bar width</label>
+          <input type="number" id="barW" value="20" min="5" max="50">
+          <span class="unit">mm</span>
+        </div>
+        <div class="input-row">
+          <label for="maxBed">Max bed length</label>
+          <input type="number" id="maxBed" value="250" min="50" max="1000" step="10">
+          <span class="unit">mm</span>
+        </div>
+      </div>
+    </div>
 
-<div class="section">
-  <div class="section-label">Pane size</div>
-  <div class="slider-row">
-    <label for="pSlider">Target pane size</label>
-    <input type="range" id="pSlider" min="20" max="230" value="230" step="1">
-    <span class="slider-val" id="pVal">230 mm</span>
+    <div class="section">
+      <div class="section-label">Pane size</div>
+      <div class="slider-row">
+        <label for="pSlider">Target pane size</label>
+        <input type="range" id="pSlider" min="20" max="230" value="230" step="1">
+        <span class="slider-val" id="pVal">230 mm</span>
+      </div>
+      <div class="slider-bounds">
+        <span>Fewer, larger panes ></span>
+        <span>< More, smaller panes</span>
+      </div>
+      <div id="autoNote" class="auto-note"></div>
+      <div id="bedWarning" class="bed-warning"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Fusion 360 parameters</div>
+      <div class="result-grid" id="results"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Verification</div>
+      <div class="result-grid" id="aspect"></div>
+    </div>
+
+    <div class="btn-row">
+      <button onclick="copyParams()">Copy parameters</button>
+      <button onclick="copyFusion()">Copy Fusion expressions</button>
+    </div>
   </div>
-  <div class="slider-bounds">
-    <span>Fewer, larger panes ></span>
-    <span>< More, smaller panes</span>
+
+  <div class="col-right">
+    <div class="section">
+      <div class="section-label">Grid preview</div>
+      <div class="grid-preview"><canvas id="gridCanvas"></canvas></div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Piece count</div>
+      <table id="pieceTable">
+        <thead><tr><th>Piece type</th><th>Per bar</th><th>Bars</th><th>Subtotal</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
   </div>
-  <div id="autoNote" class="auto-note"></div>
-  <div id="bedWarning" class="bed-warning"></div>
-</div>
-
-<div class="section">
-  <div class="section-label">Fusion 360 parameter values</div>
-  <div class="result-grid" id="results"></div>
-</div>
-
-<div class="section">
-  <div class="section-label">Pane dimensions and verification</div>
-  <div class="result-grid" id="aspect"></div>
-</div>
-
-<div class="section">
-  <div class="section-label">Grid preview</div>
-  <div class="grid-preview"><canvas id="gridCanvas"></canvas></div>
-</div>
-
-<div class="section">
-  <div class="section-label">Piece count</div>
-  <table id="pieceTable">
-    <thead><tr><th>Piece type</th><th>Per bar</th><th>Bars</th><th>Subtotal</th></tr></thead>
-    <tbody></tbody>
-  </table>
-</div>
-
-<div class="btn-row">
-  <button onclick="copyParams()">Copy parameters</button>
-  <button onclick="copyFusion()">Copy Fusion expressions</button>
 </div>
 
 <script>
@@ -230,7 +242,8 @@ function calc() {
 
 function drawGrid(W, H, V, HB, I, hF, vF) {
   let cv = $('gridCanvas'), cx = cv.getContext('2d');
-  let p = 50, mW = Math.min(340, window.innerWidth - 100), mH = 480;
+  let container = cv.parentElement.parentElement;
+  let p = 40, mW = Math.min(container.clientWidth - p * 2 - 20, 500), mH = 400;
   let sc = Math.min(mW / W, mH / H), bp = I * sc;
   let cw = Math.round((V + 1) * hF * sc + V * bp);
   let ch = Math.round((HB + 1) * vF * sc + HB * bp);
