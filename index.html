@@ -99,8 +99,18 @@
     </div>
 
     <div class="section">
-      <div class="section-label">Pane size</div>
-      <div class="slider-row">
+      <div class="section-label">Grid size</div>
+      <div class="input-grid">
+        <div class="input-row">
+          <label for="gridCols">Columns (panes)</label>
+          <input type="number" id="gridCols" value="3" min="2" max="50">
+        </div>
+        <div class="input-row">
+          <label for="gridRows">Rows (panes)</label>
+          <input type="number" id="gridRows" value="7" min="2" max="100">
+        </div>
+      </div>
+      <div class="slider-row" style="margin-top: 6px;">
         <label for="pSlider">Target pane size</label>
         <input type="range" id="pSlider" min="20" max="230" value="230" step="1">
         <span class="slider-val" id="pVal">230 mm</span>
@@ -147,8 +157,10 @@
 
 <script>
 const $ = id => document.getElementById(id);
+let gridManual = false; // true when user manually edits cols/rows
 ['paneW','paneH','barW','maxBed'].forEach(id => $(id).addEventListener('input', updateSlider));
-$('pSlider').addEventListener('input', calc);
+$('pSlider').addEventListener('input', () => { gridManual = false; calcFromSlider(); });
+['gridCols','gridRows'].forEach(id => $(id).addEventListener('input', () => { gridManual = true; calc(); }));
 
 function updateSlider() {
   let I = +$('barW').value || 20;
@@ -161,7 +173,8 @@ function updateSlider() {
   let cur = +$('pSlider').value;
   if (cur > slMax) $('pSlider').value = slMax;
   if (cur < slMin) $('pSlider').value = slMin;
-  calc();
+  if (!gridManual) calcFromSlider();
+  else calc();
 }
 
 function barsForTarget(span, I, target) {
@@ -174,6 +187,27 @@ function barsForTarget(span, I, target) {
   return Math.max(1, hi);
 }
 
+function calcFromSlider() {
+  let W = +$('paneW').value || 530;
+  let H = +$('paneH').value || 1590;
+  let I = +$('barW').value || 20;
+  let mb = +$('maxBed').value || 250;
+  let maxFlat = mb - I;
+  let target = +$('pSlider').value;
+
+  let V = barsForTarget(W, I, target);
+  let HB = barsForTarget(H, I, target);
+  let hF = (W - V * I) / (V + 1);
+  while (hF > maxFlat && V < 50) { V++; hF = (W - V * I) / (V + 1); }
+  let vF = (H - HB * I) / (HB + 1);
+  while (vF > maxFlat && HB < 100) { HB++; vF = (H - HB * I) / (HB + 1); }
+
+  // Sync grid inputs
+  $('gridCols').value = V + 1;
+  $('gridRows').value = HB + 1;
+  calc();
+}
+
 function calc() {
   let W = +$('paneW').value || 530;
   let H = +$('paneH').value || 1590;
@@ -183,18 +217,12 @@ function calc() {
   let target = +$('pSlider').value;
   $('pVal').textContent = target + ' mm';
 
-  let V = barsForTarget(W, I, target);
-  let HB = barsForTarget(H, I, target);
-
-  // Ensure flats don't exceed bed
-  let hF = (W - V * I) / (V + 1);
-  while (hF > maxFlat && V < 50) { V++; hF = (W - V * I) / (V + 1); }
-  let vF = (H - HB * I) / (HB + 1);
-  while (vF > maxFlat && HB < 100) { HB++; vF = (H - HB * I) / (HB + 1); }
-
-  let c = V + 1, r = HB + 1;
-  hF = (W - V * I) / c;
-  vF = (H - HB * I) / r;
+  let c = Math.max(2, +$('gridCols').value || 3);
+  let r = Math.max(2, +$('gridRows').value || 7);
+  let V = c - 1;
+  let HB = r - 1;
+  let hF = (W - V * I) / c;
+  let vF = (H - HB * I) / r;
 
   // Bed check
   let hP = hF + I, vP = vF + I;
@@ -284,11 +312,10 @@ function drawGrid(W, H, V, HB, I, hF, vF) {
 
 function copyParams() {
   let W = +$('paneW').value, H = +$('paneH').value, I = +$('barW').value, mb = +$('maxBed').value;
-  let target = +$('pSlider').value;
-  let V = barsForTarget(W, I, target), HB = barsForTarget(H, I, target);
-  let maxFlat = mb - I;
-  let hF = (W - V * I) / (V + 1); while (hF > maxFlat && V < 50) { V++; hF = (W - V * I) / (V + 1); }
-  let vF = (H - HB * I) / (HB + 1); while (vF > maxFlat && HB < 100) { HB++; vF = (H - HB * I) / (HB + 1); }
+  let c = +$('gridCols').value, r = +$('gridRows').value;
+  let V = c - 1, HB = r - 1;
+  let hF = (W - V * I) / c;
+  let vF = (H - HB * I) / r;
   let t = 'Muntin Bar Parameters\n' +
     'Window: ' + W + ' × ' + H + ' mm\n' +
     'Bed limit: ' + mb + ' mm (max flat: ' + (mb - I) + ' mm)\n' +
@@ -304,10 +331,10 @@ function copyParams() {
 
 function copyFusion() {
   let W = +$('paneW').value, H = +$('paneH').value, I = +$('barW').value;
-  let target = +$('pSlider').value, mb = +$('maxBed').value, maxFlat = mb - I;
-  let V = barsForTarget(W, I, target), HB = barsForTarget(H, I, target);
-  let hF = (W - V * I) / (V + 1); while (hF > maxFlat && V < 50) { V++; hF = (W - V * I) / (V + 1); }
-  let vF = (H - HB * I) / (HB + 1); while (vF > maxFlat && HB < 100) { HB++; vF = (H - HB * I) / (HB + 1); }
+  let c = +$('gridCols').value, r = +$('gridRows').value;
+  let V = c - 1, HB = r - 1;
+  let hF = (W - V * I) / c;
+  let vF = (H - HB * I) / r;
   let t = 'Fusion 360 User Parameters:\n\n' +
     'pane_width = ' + W + ' (mm)\n' +
     'pane_height = ' + H + ' (mm)\n' +
@@ -326,7 +353,7 @@ function flashBtn(idx) {
   setTimeout(() => btn.textContent = orig, 2000);
 }
 
-updateSlider();
+calcFromSlider();
 </script>
 </body>
 </html>
